@@ -133,7 +133,7 @@ export function Steps() {
                 />
 
                 <span className="block">
-                  <span className="hidden font-head text-[44px] font-bold leading-none tabular-nums text-graphite/20 md:block">
+                  <span className="num-hero hidden text-[40px] text-eco-dark/25 md:block">
                     {item.n}
                   </span>
                   {/* Засечка на линии: квадрат, а не точка — та же геометрия, что

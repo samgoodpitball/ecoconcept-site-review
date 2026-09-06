@@ -64,7 +64,7 @@ export default function WhatIsAHeatPumpPage() {
             {c.cold.table.rows.map((r) => (
               <div key={r.mode} className="grid grid-cols-[1fr_auto] gap-x-6 border-b border-line py-3.5">
                 <span className="text-[15.5px] leading-[1.5] text-graphite md:text-[16px]">{r.mode}</span>
-                <span className="font-head text-[15.5px] font-semibold tabular-nums text-graphite md:text-[16px]">
+                <span className="num text-[17px] font-semibold text-graphite md:text-[18px]">
                   {r.value}
                 </span>
               </div>
