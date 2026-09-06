@@ -166,8 +166,8 @@ export function AboutTurnkey() {
   const t = about.turnkey;
   return (
     <section className="mx-auto max-w-6xl px-4 py-20 md:px-6 md:py-28">
-      <div className="flex flex-col items-center text-center">
-        <Eyebrow centered>{t.kicker}</Eyebrow>
+      <div>
+        <Eyebrow>{t.kicker}</Eyebrow>
         <h2 className="mt-6 max-w-[16em] text-[30px] font-bold leading-[1.08] tracking-[-0.02em] md:text-[44px]">
           {t.title}
         </h2>
@@ -278,8 +278,8 @@ export function AboutScope() {
   return (
     <section className="border-b border-line bg-white">
       <div className="mx-auto max-w-6xl px-4 py-20 md:px-6 md:py-28">
-        <div className="flex flex-col items-center text-center">
-          <Eyebrow centered>{s.kicker}</Eyebrow>
+        <div>
+          <Eyebrow>{s.kicker}</Eyebrow>
           <h2 className="mt-6 max-w-[18em] text-[30px] font-bold leading-[1.08] tracking-[-0.02em] md:text-[44px]">
             {s.title}
           </h2>

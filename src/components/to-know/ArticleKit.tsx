@@ -65,7 +65,7 @@ export function Statement({ children }: { children: React.ReactNode }) {
   return (
     /* Плоский тёмно-зелёный: два разрешённых отступления от запрета градиентов
        уже заняты блоками главной и секцией «Как мы работаем». */
-    <section className="bg-[#1b3a12]">
+    <section className="bg-graphite">
       <div className="mx-auto max-w-6xl px-4 py-14 md:px-6 md:py-20">
         <p className="max-w-[18em] font-head text-[26px] font-bold leading-[1.12] tracking-[-0.02em] text-white md:text-[42px]">
           {children}

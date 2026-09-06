@@ -153,7 +153,7 @@ export function ModelCard({
         </div>
         <ul className="flex flex-wrap gap-x-3 gap-y-1.5">
           {facts(item).map((f) => (
-            <li key={f} className="font-head text-[12.5px] font-semibold text-eco-dark">
+            <li key={f} className="num text-[12.5px] font-medium text-eco-dark">
               {f}
             </li>
           ))}

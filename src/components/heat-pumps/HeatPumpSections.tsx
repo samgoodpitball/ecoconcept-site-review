@@ -55,6 +55,14 @@ export function HpHero() {
               </li>
             ))}
           </ul>
+          <div className="mt-10 flex flex-wrap gap-3">
+            <Link href={h.primary.href} className="btn-primary">
+              {h.primary.label}
+            </Link>
+            <Link href={h.secondary.href} className="btn-outline">
+              {h.secondary.label}
+            </Link>
+          </div>
         </div>
       </div>
     </section>
