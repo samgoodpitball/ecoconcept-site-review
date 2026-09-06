@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { PhotoBadge } from "@/components/product/SectionKit";
+import { PhotoBadge, Eyebrow } from "@/components/product/SectionKit";
 import Link from "next/link";
 import LeadButton from "@/components/LeadButton";
 import CareersForm from "./CareersForm";
@@ -30,29 +30,6 @@ function StockBadge({ text = "Сток · заменить" }: { text?: string }
   return <PhotoBadge position="bottom-left">{text}</PhotoBadge>;
 }
 
-/** Надзаголовок секции: короткая черта и слово вразрядку. */
-function Eyebrow({
-  children,
-  light = false,
-  centered = false,
-}: {
-  children: React.ReactNode;
-  light?: boolean;
-  centered?: boolean;
-}) {
-  return (
-    <span className={`flex items-center gap-3 ${centered ? "justify-center" : ""}`}>
-      <span aria-hidden className={`block h-px w-8 ${light ? "bg-white/40" : "bg-eco"}`} />
-      <span
-        className={`font-head text-[11px] font-bold uppercase tracking-[0.24em] ${
-          light ? "text-white/70" : "text-muted"
-        }`}
-      >
-        {children}
-      </span>
-    </span>
-  );
-}
 
 /* ────────────────────────────────────────────────────────────── hero */
 
