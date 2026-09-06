@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import StepsAccordion from "@/components/product/StepsAccordion";
 import ModelsCarousel from "@/components/product/ModelsCarousel";
+import StationSchemes from "@/components/solar/StationScheme";
 import { Eyebrow, Disclosure, CheckMark, ModelCard } from "@/components/product/SectionKit";
 import { solar } from "@/content/solar";
 import { itemsOf, categoryHref, subtitle, facts, type CatalogItem } from "@/lib/catalog-view";
@@ -106,6 +107,11 @@ export function SolHow() {
           {h.title}
         </h2>
         <p className="mt-6 max-w-[42em] text-[16px] leading-[1.7] text-muted">{h.text}</p>
+
+        {/* Чертёжная схема двух станций — конспект таблицы, см. StationScheme */}
+        <div className="mt-10">
+          <StationSchemes />
+        </div>
 
         <div className="mt-12 border-t border-line">
           {/* Шапка таблицы только на широком экране: на телефоне её роль играют
