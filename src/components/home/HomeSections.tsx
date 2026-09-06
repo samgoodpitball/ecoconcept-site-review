@@ -84,94 +84,67 @@ export function Brands() {
 }
 
 /**
- * Этапы работы — горизонтальный таймлайн.
+ * Этапы работы — «маршрутный лист» проекта (третий заход, по просьбе
+ * заказчика сделать секцию одной из самых заметных на странице).
  *
- * Третий визуальный ход для одного и того же сюжета: на продуктовых страницах
- * это тёмная полоса с аккордеоном и фотографией до края экрана, на /about —
- * сетка 2×2 с линейными иконками. Здесь ни фото, ни иконок, ни тёмного фона:
- * одна линия с засечками, крупные номера и строка «на выходе» под каждым
- * этапом. Так секция не спорит с лентой «Почему EcoConcept», которая стоит
- * следом и целиком построена на снимках.
+ * Решение: единственная полноширинная хвойная секция в середине страницы —
+ * тёмный якорь между светлыми блоками данных, читается как разворот
+ * документа. Каждый этап — строка ведомости: гигантский моно-номер
+ * (число-герой, светло-зелёный на хвое), заголовок с текстом и справа
+ * штамп «НА ВЫХОДЕ» — рамка с моно-меткой, как печать на чертеже. Между
+ * строками — линейка с делениями (ruler--dark): фирменная граница системы.
  *
- * Раскладка: на десктопе четыре колонки под общей горизонтальной линией, на
- * телефоне — вертикальная линия слева и те же засечки.
+ * Содержание не тронуто: четыре этапа, тексты и строки «На выходе»
+ * дословно из src/content/home.ts. Поле term (сроки) по-прежнему пусто и
+ * не рендерится, пока заказчик не даст реальные сроки.
+ *
+ * На 390 px строка складывается: номер и заголовок в одну линию, штамп
+ * на всю ширину под текстом.
  */
 export function Steps() {
   const s = home.steps;
   return (
-    <section className="border-b border-line bg-off">
+    <section className="bg-graphite">
       <div className="mx-auto max-w-6xl px-4 py-16 md:px-6 md:py-24">
-        <Eyebrow>{s.kicker}</Eyebrow>
+        <Eyebrow light>{s.kicker}</Eyebrow>
         <div className="mt-6 grid gap-6 md:grid-cols-[1.05fr_0.95fr] md:items-end">
-          <h2 className="max-w-[14em] text-[28px] font-bold leading-[1.1] tracking-[-0.02em] md:text-[38px]">
+          <h2 className="max-w-[14em] text-[30px] font-bold leading-[1.08] tracking-[-0.02em] !text-white md:text-[44px]">
             {s.title}
           </h2>
-          <p className="max-w-[34em] text-[16px] leading-[1.6] text-muted">{s.text}</p>
+          <p className="max-w-[34em] text-[16px] leading-[1.6] text-white/65">{s.text}</p>
         </div>
 
-        <div className="relative mt-14">
-          {/* Общая линия этапов. На десктопе проходит под номерами, на телефоне
-              её заменяет вертикальная — она задана рамкой у каждой строки. */}
-          <span
-            aria-hidden
-            className="absolute left-0 right-0 top-[69px] hidden h-px bg-line md:block"
-          />
-
-          {/* subgrid выравнивает одноимённые части всех четырёх колонок по общим
-              строкам: иначе линия «На выходе» стоит в каждой колонке на своей
-              высоте — тексты этапов разной длины. */}
-          <ol className="grid gap-10 md:grid-cols-4 md:grid-rows-[auto_auto_1fr_auto] md:gap-x-8 md:gap-y-0">
-            {s.items.map((item) => (
-              <li
-                key={item.n}
-                className="relative pl-8 md:row-span-4 md:grid md:grid-rows-subgrid md:pl-0"
-              >
-                {/* Вертикальная линия телефонной раскладки. */}
+        <ol className="mt-12 md:mt-14">
+          {s.items.map((item) => (
+            <li key={item.n}>
+              <span aria-hidden className="ruler ruler--dark block" />
+              <div className="grid gap-x-10 gap-y-4 py-8 md:grid-cols-[150px_minmax(0,1.15fr)_minmax(0,0.85fr)] md:items-start md:py-10">
+                {/* Номер-герой: главный визуальный такт секции */}
                 <span
                   aria-hidden
-                  className="absolute bottom-0 left-[4px] top-2 w-px bg-line md:hidden"
-                />
-
-                <span className="block">
-                  <span className="num-hero hidden text-[40px] text-eco-dark/25 md:block">
-                    {item.n}
-                  </span>
-                  {/* Засечка на линии: квадрат, а не точка — та же геометрия, что
-                      у отметок списков в SectionKit. */}
-                  <span
-                    aria-hidden
-                    className="absolute left-0 top-[6px] block h-[9px] w-[9px] bg-eco md:relative md:left-auto md:top-0 md:mt-[16px]"
-                  />
+                  className="num-hero block text-[56px] leading-[0.9] text-[#7CC24B]/85 md:text-[88px]"
+                >
+                  {item.n}
                 </span>
 
-                <span className="mt-1 block md:mt-6">
-                  <span className="flex items-baseline gap-3">
-                    <span className="font-head text-[15px] font-bold tabular-nums text-graphite/40 md:hidden">
-                      {item.n}
-                    </span>
-                    <h3 className="font-head text-[19px] font-bold leading-[1.2] text-graphite md:text-[21px]">
-                      {item.title}
-                    </h3>
-                  </span>
-                  {item.term ? (
-                    <span className="mt-2 block font-head text-[12px] font-bold uppercase tracking-[0.14em] text-eco-dark">
-                      {item.term}
-                    </span>
-                  ) : null}
-                </span>
+                <div>
+                  <h3 className="font-head text-[20px] font-bold leading-[1.2] text-white md:text-[24px]">
+                    {item.title}
+                  </h3>
+                  <p className="mt-3 max-w-[36em] text-[15.5px] leading-[1.65] text-white/70 md:text-[16px]">
+                    {item.text}
+                  </p>
+                </div>
 
-                <p className="mt-3 text-[15px] leading-[1.6] text-muted">{item.text}</p>
-
-                <p className="mt-5 border-t border-line pt-4 text-[14.5px] leading-[1.5] text-graphite">
-                  <span className="mb-1.5 block font-head text-[10.5px] font-bold uppercase tracking-[0.16em] text-muted">
-                    На выходе
-                  </span>
-                  {item.result}
-                </p>
-              </li>
-            ))}
-          </ol>
-        </div>
+                {/* Штамп результата: что заказчик держит в руках после этапа */}
+                <div className="rounded-[8px] border border-[#7CC24B]/45 p-4 md:justify-self-end md:p-5 md:min-w-[260px] md:max-w-[320px]">
+                  <span className="mono-label !text-[#7CC24B]">На выходе</span>
+                  <p className="mt-2 text-[14.5px] leading-[1.55] text-white/85">{item.result}</p>
+                </div>
+              </div>
+            </li>
+          ))}
+        </ol>
       </div>
     </section>
   );
