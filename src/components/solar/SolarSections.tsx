@@ -151,15 +151,25 @@ export function SolHow() {
 
 /* ──────────────────────────────────────────────────────── оборудование */
 
-/** Главное число модели вместо фотографии: у Deye снимков нет. */
+/**
+ * Главное число модели вместо фотографии: снимков Deye нет ни у одной из 29
+ * позиций инверторов и батарей, поэтому фильтровать ленту по наличию фото
+ * нечем — останется одна панель.
+ *
+ * Подпись «фото ожидается» убрана 06.09.2026: она читалась как заглушка и
+ * признавалась в том, чего у карточки нет. Вместо неё — вторая характеристика
+ * из каталога, и карточка становится строкой спецификации, а не пустым местом.
+ */
 function NumberSlot({ item }: { item: CatalogItem }) {
-  const value = facts(item)[0] ?? "";
+  const [value, second] = facts(item);
   return (
     <span className="flex h-full flex-col items-center justify-center gap-2 px-4 text-center">
-      <span className="font-head text-[30px] font-bold leading-none tracking-[-0.02em] text-graphite">{value}</span>
-      <span className="font-head text-[11px] font-bold uppercase tracking-[0.14em] text-muted">
-        фото ожидается
+      <span className="font-head text-[30px] font-bold leading-none tracking-[-0.02em] text-graphite">
+        {value ?? ""}
       </span>
+      {second ? (
+        <span className="font-head text-[11px] font-bold uppercase tracking-[0.14em] text-muted">{second}</span>
+      ) : null}
     </span>
   );
 }

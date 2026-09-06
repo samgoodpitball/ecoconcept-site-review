@@ -18,6 +18,8 @@
 }
 
 :root {
+  /* ⛔️ Не использовать: градиенты запрещены дизайн-системой. Переменная
+     оставлена только для старой вёрстки, которую ещё не разобрали. */
   --gradient-brand: linear-gradient(120deg, #448a16 0%, #2e6210 100%);
   --shadow-card: 0 2px 8px rgba(20, 20, 20, 0.04), 0 8px 24px rgba(20, 20, 20, 0.06);
   --shadow-card-hover: 0 4px 12px rgba(20, 20, 20, 0.06), 0 16px 40px rgba(20, 20, 20, 0.1);
@@ -67,7 +69,7 @@
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  background: var(--gradient-brand);
+  background: var(--color-eco);
   color: #fff;
   font-family: var(--font-head);
   font-weight: 600;

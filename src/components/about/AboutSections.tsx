@@ -70,7 +70,7 @@ export function AboutHero() {
       />
       <div
         aria-hidden
-        className="absolute inset-0 bg-[linear-gradient(100deg,rgba(16,18,16,0.9)_0%,rgba(16,18,16,0.6)_46%,rgba(16,18,16,0.08)_88%)]"
+        className="absolute inset-0 bg-graphite/60"
       />
       <span className="absolute right-4 top-4 z-10 rounded-[4px] bg-white/15 px-2 py-1 font-head text-[10px] font-bold uppercase tracking-[0.12em] text-white/80">
         Сток · заменить своим объектом
@@ -223,7 +223,7 @@ export function AboutTeam() {
       />
       <div
         aria-hidden
-        className="absolute inset-0 bg-[linear-gradient(90deg,rgba(16,18,16,0.96)_0%,rgba(16,18,16,0.88)_52%,rgba(16,18,16,0.5)_100%)]"
+        className="absolute inset-0 bg-graphite/80"
       />
 
       <div className="relative mx-auto grid max-w-6xl gap-14 px-4 py-20 md:grid-cols-[1.12fr_0.88fr] md:px-6 md:py-28">
@@ -242,15 +242,25 @@ export function AboutTeam() {
               fill="#7CC24B"
             />
           </svg>
-          <blockquote className="font-head text-[21px] font-semibold leading-[1.4] !text-white md:text-[25px]">
-            {t.quote}
-          </blockquote>
-          <figcaption className="mt-7 text-[14.5px] text-white/65">
-            <GapMark value={t.author} /> — {t.role}
-          </figcaption>
-          <span className="mt-4 inline-block rounded-[4px] bg-white/10 px-2 py-1 font-head text-[10px] font-bold uppercase tracking-[0.12em] text-white/60">
-            {t.quoteNote}
-          </span>
+          {/* ⏳ Цитата показывается, только когда есть реальные слова и имя.
+              Черновик с пропуском на месте имени посетителю видеть незачем —
+              это заметка для нас, а не контент страницы. */}
+          {typeof t.author === "string" ? (
+            <>
+              <blockquote className="font-head text-[21px] font-semibold leading-[1.4] !text-white md:text-[25px]">
+                {t.quote}
+              </blockquote>
+              <figcaption className="mt-7 text-[14.5px] text-white/65">
+                {t.author} — {t.role}
+              </figcaption>
+            </>
+          ) : (
+            <p className="max-w-[26em] text-[16px] leading-[1.7] text-white/75">
+              Мастеров обучали инженеры производителей — на том же оборудовании,
+              которое мы ставим клиентам. Слова бригадира появятся здесь после съёмки
+              на объекте.
+            </p>
+          )}
         </figure>
       </div>
     </section>

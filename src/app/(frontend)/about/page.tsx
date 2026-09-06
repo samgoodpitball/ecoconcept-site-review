@@ -8,7 +8,6 @@ import {
   AboutTeam,
   AboutScope,
   AboutBrands,
-  AboutProjects,
   AboutOffice,
   AboutCareers,
 } from "@/components/about/AboutSections";
@@ -27,6 +26,10 @@ export const metadata: Metadata = {
  *
  * Секции чисел о компании здесь намеренно нет: компания молодая, и стажем
  * хвастаться нечем — вместо неё работает блок про обучение у производителей.
+ *
+ * ⏳ Секция «Объекты из последних» снята 06.09.2026: она стояла на стоковых
+ * кадрах с плейсхолдером города и читалась как портфолио, которого у нас нет.
+ * Компонент AboutProjects оставлен — вернуть его вместе со своей съёмкой.
  */
 export default function AboutPage() {
   return (
@@ -38,7 +41,6 @@ export default function AboutPage() {
         <AboutTeam />
         <AboutScope />
         <AboutBrands />
-        <AboutProjects />
         <AboutOffice />
         <AboutCareers />
         <Lead source="about" />

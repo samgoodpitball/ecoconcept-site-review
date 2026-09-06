@@ -19,7 +19,7 @@ export default function Lead({ source = "home", interest }: { source?: string; i
   }
 
   return (
-    <section id="lead" className="relative scroll-mt-24 overflow-hidden bg-gradient-to-br from-eco to-eco-dark">
+    <section id="lead" className="relative scroll-mt-24 overflow-hidden bg-eco">
       <div
         aria-hidden
         className="pointer-events-none absolute -inset-10 opacity-[0.05]"
