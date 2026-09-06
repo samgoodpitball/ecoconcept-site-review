@@ -1,0 +1,47 @@
+/**
+ * Фирменные цвета в админке Payload.
+ * Переопределяем только акценты — остальную вёрстку админки не трогаем,
+ * чтобы обновления Payload ничего не ломали.
+ */
+:root {
+  /* Основной акцент — брендовый зелёный вместо дефолтного синего */
+  --theme-success-500: #448a16;
+
+  --color-success-50: #f2f8ec;
+  --color-success-100: #eaf3df;
+  --color-success-500: #448a16;
+  --color-success-600: #3a7513;
+  --color-success-700: #2e6210;
+
+  /* Кнопки и ссылки */
+  --theme-elevation-800: #20261c;
+  --theme-elevation-900: #141414;
+}
+
+/* Первичные кнопки и активные элементы — в зелёном бренда */
+.btn--style-primary .btn__content,
+.btn--style-primary {
+  --color-base-800: #448a16;
+  --color-base-850: #2e6210;
+}
+
+.btn--style-primary {
+  background-color: #448a16;
+  border-color: #448a16;
+}
+.btn--style-primary:hover,
+.btn--style-primary:focus-visible {
+  background-color: #2e6210;
+  border-color: #2e6210;
+}
+
+/* Ссылки в таблицах и навигации */
+.nav__link:hover,
+.nav__link--active {
+  color: #2e6210;
+}
+
+/* Полоса загрузки и индикаторы */
+.loading-overlay__bars span {
+  background-color: #448a16;
+}
