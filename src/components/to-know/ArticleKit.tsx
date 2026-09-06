@@ -112,7 +112,7 @@ export function NumberedList({ items }: { items: readonly { title: string; text:
     <ol className="mt-9 flex flex-col">
       {items.map((item, i) => (
         <li key={item.title} className="flex gap-5 border-t border-line py-6 last:border-b">
-          <span className="font-head text-[15px] font-bold tabular-nums text-eco-dark md:text-[17px]">
+          <span className="num-hero pt-0.5 text-[22px] text-eco-dark/70 md:text-[26px]">
             {String(i + 1).padStart(2, "0")}
           </span>
           <span>
