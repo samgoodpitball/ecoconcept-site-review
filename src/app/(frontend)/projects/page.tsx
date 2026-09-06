@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import Lead from "@/components/Lead";
+import FormStrip from "@/components/FormStrip";
 
 export const metadata: Metadata = {
   title: "Объекты EcoConcept — портфолио смонтированных систем",
@@ -55,7 +55,7 @@ export default function ProjectsPage() {
           </div>
         </section>
 
-        <Lead source="projects" />
+        <FormStrip source="projects" />
       </main>
       <Footer />
     </>

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import Lead from "@/components/Lead";
+import FormStrip from "@/components/FormStrip";
 import EstimateSection from "@/components/calculator/EstimateSection";
 import WhyUs from "@/components/product/WhyUs";
 import { solar } from "@/content/solar";
@@ -42,7 +42,7 @@ export default function SolarPage() {
         <SolSteps />
         <WhyUs {...solar.why} />
         <SolFaq />
-        <Lead source="solar" interest="solar" />
+        <FormStrip source="solar" interest="solar" />
       </main>
       <Footer />
     </>

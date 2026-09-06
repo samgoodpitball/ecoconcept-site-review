@@ -2,7 +2,7 @@ import { Fragment } from "react";
 import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import Lead from "@/components/Lead";
+import FormStrip from "@/components/FormStrip";
 import CatalogSidebar from "./CatalogSidebar";
 import CategoryTabs from "./CategoryTabs";
 import Pagination from "./Pagination";
@@ -117,7 +117,7 @@ export default function CategoryView({
           </div>
         </div>
 
-        <Lead source={`catalog-${category}`} />
+        <FormStrip source={`catalog-${category}`} />
       </main>
       <Footer />
     </>

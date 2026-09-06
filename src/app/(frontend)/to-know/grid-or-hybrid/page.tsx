@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import Lead from "@/components/Lead";
+import FormStrip from "@/components/FormStrip";
 import {
   ArticleHero,
   Statement,
@@ -87,7 +87,7 @@ export default function GridOrHybridPage() {
 
         <NextSteps {...c.next} />
         <SourcesNote items={c.sources} />
-        <Lead source="to-know-grid-or-hybrid" interest="solar" />
+        <FormStrip source="to-know-grid-or-hybrid" interest="solar" />
       </main>
       <Footer />
     </>

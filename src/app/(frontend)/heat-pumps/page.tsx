@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import Lead from "@/components/Lead";
+import FormStrip from "@/components/FormStrip";
 import EstimateSection from "@/components/calculator/EstimateSection";
 import WhyUs from "@/components/product/WhyUs";
 import HeatingCompare from "@/components/product/HeatingCompare";
@@ -45,7 +45,7 @@ export default function HeatPumpsPage() {
         <HpSteps />
         <WhyUs {...heatPumps.why} />
         <HpFaq />
-        <Lead source="heat-pumps" interest="heat" />
+        <FormStrip source="heat-pumps" interest="heat" />
       </main>
       <Footer />
     </>
