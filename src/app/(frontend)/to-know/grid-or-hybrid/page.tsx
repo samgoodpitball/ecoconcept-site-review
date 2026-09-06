@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import Lead from "@/components/Lead";
+import FormStrip from "@/components/FormStrip";
 import {
   ArticleHero,
   Statement,
@@ -11,6 +11,8 @@ import {
   NextSteps,
   SourcesNote,
 } from "@/components/to-know/ArticleKit";
+import SchemeFigure from "@/components/SchemeFigure";
+import StationSchemes from "@/components/solar/StationScheme";
 import { gridOrHybrid as c } from "@/content/to-know/grid-or-hybrid";
 
 export const metadata: Metadata = {
@@ -34,7 +36,21 @@ export default function GridOrHybridPage() {
         <ArticleHero {...c.hero} />
         <Statement>{c.statement}</Statement>
 
-        <Chapter title={c.what.title} paragraphs={c.what.paragraphs} />
+        <Chapter title={c.what.title} paragraphs={c.what.paragraphs}>
+          {/* Схема идёт после абзацев, а не вместо них: текст объясняет роль
+              инвертора, картинка показывает, куда при этом течёт ток. */}
+          <div className="mt-10">
+            <SchemeFigure
+              src={c.figure.src}
+              alt={c.figure.alt}
+              caption={c.figure.caption}
+              figure="01"
+              width={c.figure.width}
+              height={c.figure.height}
+              minWidth={900}
+            />
+          </div>
+        </Chapter>
 
         <Chapter title={c.compare.title} tone="off">
           {/* Сравнение — таблица: на телефоне колонки становятся подписанными
@@ -71,6 +87,13 @@ export default function GridOrHybridPage() {
             <p className="mt-5 max-w-[46em] border-l-2 border-amber pl-4 text-[14.5px] leading-[1.6] text-muted">
               {c.compare.note}
             </p>
+
+            {/* Однолинейный чертёж: он показывает то, чего не видно в таблице, —
+                что именно размыкается при пропаже сети. До 06.09.2026 стоял на
+                /solar рядом с такой же таблицей и дублировал её. */}
+            <div className="mt-12">
+              <StationSchemes />
+            </div>
           </div>
         </Chapter>
 
@@ -87,7 +110,7 @@ export default function GridOrHybridPage() {
 
         <NextSteps {...c.next} />
         <SourcesNote items={c.sources} />
-        <Lead source="to-know-grid-or-hybrid" interest="solar" />
+        <FormStrip source="to-know-grid-or-hybrid" interest="solar" />
       </main>
       <Footer />
     </>

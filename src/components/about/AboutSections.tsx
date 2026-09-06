@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { PhotoBadge } from "@/components/product/SectionKit";
+import { PhotoBadge, Eyebrow } from "@/components/product/SectionKit";
 import Link from "next/link";
 import LeadButton from "@/components/LeadButton";
 import CareersForm from "./CareersForm";
@@ -30,29 +30,6 @@ function StockBadge({ text = "Сток · заменить" }: { text?: string }
   return <PhotoBadge position="bottom-left">{text}</PhotoBadge>;
 }
 
-/** Надзаголовок секции: короткая черта и слово вразрядку. */
-function Eyebrow({
-  children,
-  light = false,
-  centered = false,
-}: {
-  children: React.ReactNode;
-  light?: boolean;
-  centered?: boolean;
-}) {
-  return (
-    <span className={`flex items-center gap-3 ${centered ? "justify-center" : ""}`}>
-      <span aria-hidden className={`block h-px w-8 ${light ? "bg-white/40" : "bg-eco"}`} />
-      <span
-        className={`font-head text-[11px] font-bold uppercase tracking-[0.24em] ${
-          light ? "text-white/70" : "text-muted"
-        }`}
-      >
-        {children}
-      </span>
-    </span>
-  );
-}
 
 /* ────────────────────────────────────────────────────────────── hero */
 
@@ -166,8 +143,8 @@ export function AboutTurnkey() {
   const t = about.turnkey;
   return (
     <section className="mx-auto max-w-6xl px-4 py-20 md:px-6 md:py-28">
-      <div className="flex flex-col items-center text-center">
-        <Eyebrow centered>{t.kicker}</Eyebrow>
+      <div>
+        <Eyebrow>{t.kicker}</Eyebrow>
         <h2 className="mt-6 max-w-[16em] text-[30px] font-bold leading-[1.08] tracking-[-0.02em] md:text-[44px]">
           {t.title}
         </h2>
@@ -278,8 +255,8 @@ export function AboutScope() {
   return (
     <section className="border-b border-line bg-white">
       <div className="mx-auto max-w-6xl px-4 py-20 md:px-6 md:py-28">
-        <div className="flex flex-col items-center text-center">
-          <Eyebrow centered>{s.kicker}</Eyebrow>
+        <div>
+          <Eyebrow>{s.kicker}</Eyebrow>
           <h2 className="mt-6 max-w-[18em] text-[30px] font-bold leading-[1.08] tracking-[-0.02em] md:text-[44px]">
             {s.title}
           </h2>
@@ -520,7 +497,8 @@ export function AboutOffice() {
 export function AboutCareers() {
   const c = about.careers;
   return (
-    <section className="border-t border-line bg-white">
+    // Якорь для ссылок вида /about#careers — секция вакансий адресуемая.
+    <section id="careers" className="scroll-mt-24 border-t border-line bg-white">
       <div className="mx-auto max-w-6xl px-4 py-20 md:px-6 md:py-28">
         <h2 className="text-center text-[34px] font-bold leading-[1.05] tracking-[-0.02em] md:text-[52px]">
           {c.title}
@@ -529,13 +507,13 @@ export function AboutCareers() {
         <div className="mt-16 grid gap-10 md:mt-24 md:grid-cols-2 md:gap-16">
           <div className="relative aspect-[4/3] w-full">
             <Image
-              src="/photo/stock/about-careers-v2.webp"
+              src="/photo/stock/about-careers-v3.webp"
               alt={c.photoAlt}
               fill
               sizes="(max-width: 768px) 92vw, 520px"
               className="object-cover"
             />
-            <StockBadge text="Сток · заменить своей съёмкой" />
+            <StockBadge text="ИИ-генерация · заменить своей съёмкой" />
           </div>
 
           {/* текст оптически центрирован относительно фотографии, как в референсе */}

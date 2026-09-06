@@ -51,7 +51,7 @@ function Row({ label, value }: { label: string; value: string }) {
   return (
     <div className="flex items-baseline justify-between gap-5 border-b border-line py-3.5 last:border-b-0 md:py-4">
       <span className="text-[14px] text-muted md:text-[15px]">{label}</span>
-      <span className="shrink-0 text-right font-head text-[14.5px] font-bold text-graphite md:text-[16px]">
+      <span className="num shrink-0 text-right text-[14.5px] font-semibold text-graphite md:text-[15.5px]">
         {value}
       </span>
     </div>
@@ -72,7 +72,7 @@ export default function EstimateSection({
 
   return (
     <section className="bg-white px-4 py-12 md:px-6 md:py-16">
-      <div className="mx-auto max-w-6xl overflow-hidden rounded-[32px] bg-tint px-5 py-10 md:rounded-[32px] md:px-12 md:py-14">
+      <div className="mx-auto max-w-6xl overflow-hidden rounded-[10px] bg-tint px-5 py-10 md:px-12 md:py-14">
         <div className="grid items-center gap-10 md:grid-cols-2 md:gap-14">
           <div>
             <span className="kicker">{p.kicker}</span>
@@ -90,8 +90,8 @@ export default function EstimateSection({
             </Link>
           </div>
 
-          <div className="overflow-hidden rounded-[20px] bg-white">
-            <div className="bg-[#111c14] px-5 py-4 md:px-6 md:py-5">
+          <div className="overflow-hidden rounded-[10px] border border-line bg-white">
+            <div className="bg-graphite px-5 py-4 md:px-6 md:py-5">
               <p className="font-head text-[16px] font-bold text-white md:text-[18px]">
                 {isSolar ? p.solarCardTitle : p.cardTitle}
               </p>
@@ -123,13 +123,13 @@ export default function EstimateSection({
             )}
 
             <div className="px-5 pb-5 md:px-6 md:pb-6">
-              <div className="mt-3 flex items-center justify-between gap-5 rounded-[12px] bg-tint px-4 py-3.5 md:px-5">
+              <div className="mt-3 flex items-center justify-between gap-5 rounded-[8px] bg-tint px-4 py-3.5 md:px-5">
                 {isSolar ? (
                   <>
                     <span className="font-head text-[15px] font-bold text-graphite md:text-[16.5px]">
                       {solarPrice ? "Под ключ, без батареи" : "По дорогому блоку сейчас"}
                     </span>
-                    <span className="font-head text-[18px] font-bold text-eco-dark md:text-[22px]">
+                    <span className="num-hero text-[20px] text-eco-dark md:text-[24px]">
                       {solarPrice
                         ? `≈ ${num(solarPrice.totalKgs)} сом`
                         : `≈ ${num(solarSample.highBlockCost)} сом/мес`}
@@ -140,7 +140,7 @@ export default function EstimateSection({
                     <span className="font-head text-[15px] font-bold text-graphite md:text-[16.5px]">
                       {samplePrice ? "Под ключ" : "Дешевле электрокотла"}
                     </span>
-                    <span className="font-head text-[18px] font-bold text-eco-dark md:text-[22px]">
+                    <span className="num-hero text-[20px] text-eco-dark md:text-[24px]">
                       {samplePrice ? `≈ ${num(samplePrice.totalKgs)} сом` : `в ${ratio} раза`}
                     </span>
                   </>

@@ -2,23 +2,23 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { PhotoBadge } from "@/components/product/SectionKit";
+import { PhotoBadge, Eyebrow } from "@/components/product/SectionKit";
+import type { IconName } from "@/components/ui/icons";
 
 /**
  * Секция «Почему EcoConcept» — причины выбрать нас, а не соседа по рынку.
  *
- * Раскладка снята с блока «Power your home, your way» на energysage.com:
- * ряд высоких плиток, у каждой фотография во всю плитку и крупный белый
- * заголовок внизу. Плитки узкие, пока их не тронули; наведение расширяет одну
- * за счёт соседних, клик раскрывает текст причины.
+ * Возвращена лента плиток со снимками (решение заказчика, третий заход):
+ * протокол без фотографий не подошёл. Структура — прежняя, из ветки main
+ * (ряд высоких плиток по образцу energysage.com: наведение расширяет,
+ * клик раскрывает текст), но одета в систему «инженерного журнала»:
+ * левая шапка с номером секции вместо центра, радиус 10px, затемнение —
+ * плоская хвоя, служебная метка «Подробнее» — моно-голосом. Плашки
+ * происхождения снимков обязательны, пока нет своей съёмки.
  *
- * Разделение «навёл — шире, нажал — текст» — постановка заказчика 05.09.2026.
- * Смысл: пробегая мышью по ряду, человек читает только заголовки и не получает
- * прыгающих абзацев; текст приходит, когда он его выбрал.
- *
- * Затемнение под белым текстом — сплошная плашка, а не градиент: градиенты
- * запрещены дизайн-системой, а без затемнения белый заголовок не читается на
- * светлых кадрах.
+ * Разделение «навёл — шире, нажал — текст» — постановка заказчика
+ * 05.09.2026: пробегая мышью по ряду, человек читает только заголовки и
+ * не получает прыгающих абзацев; текст приходит, когда он его выбрал.
  *
  * Секция общая для всех страниц, различается только контент.
  */
@@ -30,6 +30,8 @@ export type WhyItem = {
   readonly alt: string;
   /** Плашка на снимке: «Сток · заменить» или «ИИ-генерация». Пусто — своя съёмка. */
   readonly badge?: string;
+  /** Знак сущности; лентой не используется, поле сохранено для других подач. */
+  readonly icon?: IconName;
 };
 
 export default function WhyUs({
@@ -51,14 +53,16 @@ export default function WhyUs({
 
   return (
     <section className="border-t border-line bg-white">
-      <div className="mx-auto max-w-6xl px-4 py-20 md:px-6 md:py-28">
-        <div className="text-center">
-          <h2 className="text-[30px] font-bold leading-[1.08] tracking-[-0.02em] md:text-[44px]">{title}</h2>
-          <p className="mt-4 text-[19px] leading-[1.35] text-muted md:text-[24px]">{subtitle}</p>
-        </div>
+      <div className="mx-auto max-w-6xl px-4 py-16 md:px-6 md:py-24">
+        {/* Подзаголовок играет роль рубрики — секция получает ту же левую
+            шапку с номером, что и все остальные. */}
+        <Eyebrow>{subtitle}</Eyebrow>
+        <h2 className="mt-5 max-w-[16em] text-[30px] font-bold leading-[1.08] tracking-[-0.02em] md:text-[44px]">
+          {title}
+        </h2>
 
         <div
-          className="mt-12 flex flex-col gap-3 md:h-[560px] md:flex-row"
+          className="mt-10 flex flex-col gap-3 md:mt-12 md:h-[560px] md:flex-row"
           onMouseLeave={() => setHovered(null)}
         >
           {items.map((item, i) => {
@@ -76,7 +80,7 @@ export default function WhyUs({
                 onFocus={() => setHovered(i)}
                 onClick={() => setOpen(isOpen ? -1 : i)}
                 style={{ flexGrow: isWide ? 3 : 1 }}
-                className={`group relative overflow-hidden rounded-[12px] text-left transition-all duration-200 ease-out motion-reduce:transition-none md:min-w-0 md:flex-1 md:basis-0 ${
+                className={`group relative overflow-hidden rounded-[10px] text-left transition-all duration-200 ease-out motion-reduce:transition-none md:min-w-0 md:flex-1 md:basis-0 ${
                   isOpen ? "h-[300px]" : "h-[116px]"
                 } md:h-auto`}
               >
@@ -88,8 +92,8 @@ export default function WhyUs({
                   className="object-cover"
                 />
 
-                {/* Плашка держит контраст белого текста: 40% на узкой плитке,
-                    60% на раскрытой, где под заголовком идёт абзац. */}
+                {/* Затемнение под белым текстом — плоская хвоя, не градиент:
+                    40% на узкой плитке, 55% на раскрытой с абзацем. */}
                 <span
                   aria-hidden
                   className={`absolute inset-0 bg-graphite transition-opacity duration-200 motion-reduce:transition-none ${
@@ -97,15 +101,9 @@ export default function WhyUs({
                   }`}
                 />
 
-                {item.badge ? (
-                  <PhotoBadge>{item.badge}</PhotoBadge>
-                ) : null}
+                {item.badge ? <PhotoBadge>{item.badge}</PhotoBadge> : null}
 
-                <span
-                  className={`absolute inset-x-0 bottom-0 flex flex-col ${
-                    isWide ? "p-5 md:p-6" : "p-4"
-                  }`}
-                >
+                <span className={`absolute inset-x-0 bottom-0 flex flex-col ${isWide ? "p-5 md:p-6" : "p-4"}`}>
                   <span
                     className={`font-head font-bold leading-[1.15] tracking-[-0.01em] text-white [hyphens:auto] ${
                       isWide ? "text-[20px] md:text-[26px]" : "text-[16px]"
@@ -128,11 +126,7 @@ export default function WhyUs({
                     </span>
                   </span>
 
-                  {!showText ? (
-                    <span className="mt-3 font-head text-[11px] font-bold uppercase tracking-[0.16em] text-white/70">
-                      Подробнее
-                    </span>
-                  ) : null}
+                  {!showText ? <span className="mono-label mt-3 !text-white/70">Подробнее</span> : null}
                 </span>
               </button>
             );

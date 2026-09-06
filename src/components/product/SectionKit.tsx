@@ -11,26 +11,34 @@ import { productHref, facts, type CatalogItem } from "@/lib/catalog-view";
  * раскрывающийся пункт и карточка модели.
  */
 
-/** Надзаголовок секции: короткая линия и капитель. */
+/**
+ * Надзаголовок секции — единственная система шапок на сайте.
+ *
+ * Устройство: номер секции (моно, ведёт CSS-счётчик), короткая линейка с
+ * делениями и рубрика капителью. Номер превращает страницу в оглавление
+ * документа — это часть характера «инженерного журнала». `plain` отключает
+ * номер там, где секция вне сквозного счёта (hero статьи, финальные призывы).
+ */
 export function Eyebrow({
   children,
   light = false,
   centered = false,
+  plain = false,
 }: {
   children: React.ReactNode;
   light?: boolean;
   centered?: boolean;
+  plain?: boolean;
 }) {
   return (
     <span className={`flex items-center gap-3 ${centered ? "justify-center" : ""}`}>
-      <span aria-hidden className={`block h-px w-8 ${light ? "bg-white/40" : "bg-eco"}`} />
-      <span
-        className={`font-head text-[11px] font-bold uppercase tracking-[0.24em] ${
-          light ? "text-white/70" : "text-muted"
-        }`}
-      >
-        {children}
-      </span>
+      {!plain && (
+        <span
+          aria-hidden
+          className={`sec-num num text-[0.78rem] font-medium leading-none ${light ? "text-white/60" : "text-eco-dark"}`}
+        />
+      )}
+      <span className={`mono-label ${light ? "!text-white/70" : ""}`}>{children}</span>
     </span>
   );
 }
@@ -80,11 +88,17 @@ export function CheckMark() {
     <svg width="28" height="28" viewBox="0 0 26 26" fill="none" aria-hidden="true" className="mt-px shrink-0">
       <path
         d="M22 12.5V21a1.5 1.5 0 0 1-1.5 1.5h-16A1.5 1.5 0 0 1 3 21V5a1.5 1.5 0 0 1 1.5-1.5H17"
-        stroke="#2e6210"
+        stroke="var(--color-eco-dark)"
         strokeWidth="1.5"
         strokeLinecap="round"
       />
-      <path d="m8 12 5 5L24 3.5" stroke="#448a16" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" />
+      <path
+        d="m8 12 5 5L24 3.5"
+        stroke="var(--color-eco)"
+        strokeWidth="1.9"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
   );
 }
@@ -138,7 +152,7 @@ export function ModelCard({
         </div>
         <ul className="flex flex-wrap gap-x-3 gap-y-1.5">
           {facts(item).map((f) => (
-            <li key={f} className="font-head text-[12.5px] font-semibold text-eco-dark">
+            <li key={f} className="num text-[12.5px] font-medium text-eco-dark">
               {f}
             </li>
           ))}

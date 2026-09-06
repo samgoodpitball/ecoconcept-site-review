@@ -118,12 +118,24 @@ export default function Header() {
           >
             О компании
           </Link>
-          <a
-            href={contacts.phoneHref}
-            className="whitespace-nowrap font-head text-[15px] font-bold text-graphite hover:text-eco-dark"
-          >
-            {contacts.phoneDisplay}
-          </a>
+          {/* Две линии компании: звонить можно на любую. Набраны одинаково —
+              разного размера они читались как ошибка вёрстки, а не как
+              иерархия. Столбиком, а не в строку: строка растянула бы шапку и
+              выдавила кнопку расчёта. */}
+          <span className="flex flex-col items-start gap-0.5 leading-[1.1]">
+            <a
+              href={contacts.phoneHref}
+              className="whitespace-nowrap font-head text-[14.5px] font-bold text-graphite hover:text-eco-dark"
+            >
+              {contacts.phoneDisplay}
+            </a>
+            <a
+              href={contacts.phone2Href}
+              className="whitespace-nowrap font-head text-[14.5px] font-bold text-graphite hover:text-eco-dark"
+            >
+              {contacts.phone2Display}
+            </a>
+          </span>
           <LeadButton source="header" className="btn-primary whitespace-nowrap !py-2.5 !px-5 text-sm">
             Получить расчёт
           </LeadButton>
@@ -203,6 +215,9 @@ export default function Header() {
             </Link>
             <a href={contacts.phoneHref} className="font-head text-lg font-bold text-graphite">
               {contacts.phoneDisplay}
+            </a>
+            <a href={contacts.phone2Href} className="-mt-2 font-head text-lg font-bold text-graphite">
+              {contacts.phone2Display}
             </a>
             <LeadButton source="header-mobile" onOpen={() => setOpen(false)} className="btn-primary">
               Получить расчёт

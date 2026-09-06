@@ -47,14 +47,14 @@ export function HpHero() {
           <h1 className="mt-6 text-[34px] font-bold leading-[1.06] tracking-[-0.025em] md:text-[52px]">{h.title}</h1>
           <p className="mt-7 max-w-[34em] text-[16.5px] leading-[1.65] text-muted md:text-[17px]">{h.text}</p>
 
-          <ul className="mt-10 flex flex-col gap-5">
-            {h.facts.map((fact) => (
-              <li key={fact} className="flex items-start gap-4">
-                <CheckMark />
-                <span className="text-[16px] leading-[1.5] text-ink md:text-[16.5px]">{fact}</span>
-              </li>
-            ))}
-          </ul>
+          <div className="mt-9 flex flex-wrap gap-3">
+            <Link href={h.primary.href} className="btn-primary">
+              {h.primary.label}
+            </Link>
+            <Link href={h.secondary.href} className="btn-outline">
+              {h.secondary.label}
+            </Link>
+          </div>
         </div>
       </div>
     </section>

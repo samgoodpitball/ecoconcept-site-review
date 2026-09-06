@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import Lead from "@/components/Lead";
+import FormStrip from "@/components/FormStrip";
 import {
   AboutHero,
   AboutTurnkey,
@@ -43,7 +43,7 @@ export default function AboutPage() {
         <AboutBrands />
         <AboutOffice />
         <AboutCareers />
-        <Lead source="about" />
+        <FormStrip source="about" />
       </main>
       <Footer />
     </>

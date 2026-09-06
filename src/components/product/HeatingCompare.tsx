@@ -73,7 +73,7 @@ export default function HeatingCompare({ kicker = "Деньги" }: { kicker?: s
           </div>
 
           <label className="flex shrink-0 items-end gap-3">
-            <span className="pb-2 font-head text-[11px] font-bold uppercase tracking-[0.18em] text-muted">
+            <span className="mono-label pb-2">
               Площадь дома
             </span>
             <span className="flex items-baseline gap-2">
@@ -84,7 +84,7 @@ export default function HeatingCompare({ kicker = "Деньги" }: { kicker?: s
                 onChange={(e) => setAreaText(e.target.value.replace(/[^\d]/g, "").slice(0, 4))}
                 onBlur={() => setAreaText(String(area))}
                 aria-label="Отапливаемая площадь, м²"
-                className="w-[4.5ch] border-0 border-b-2 border-eco bg-transparent p-0 text-center font-head text-[34px] font-bold tabular-nums text-graphite outline-none focus:border-eco-dark md:text-[38px]"
+                className="w-[4.5ch] border-0 border-b-2 border-eco bg-transparent p-0 text-center num-hero text-[34px] text-graphite outline-none focus:border-eco-dark md:text-[38px]"
               />
               <span className="font-head text-[17px] font-semibold text-muted">м²</span>
             </span>
@@ -94,11 +94,11 @@ export default function HeatingCompare({ kicker = "Деньги" }: { kicker?: s
         {/* ─────────────────────────────── таблица: два числа на строку */}
         <div className="mt-10">
           <div className="hidden grid-cols-[1fr_minmax(0,160px)_minmax(0,160px)] gap-6 border-b border-line pb-2.5 md:grid">
-            <span className="font-head text-[11px] font-bold uppercase tracking-[0.16em] text-muted">Чем греем</span>
-            <span className="text-right font-head text-[11px] font-bold uppercase tracking-[0.16em] text-muted">
+            <span className="mono-label">Чем греем</span>
+            <span className="mono-label text-right">
               В зимний месяц
             </span>
-            <span className="text-right font-head text-[11px] font-bold uppercase tracking-[0.16em] text-muted">
+            <span className="mono-label text-right">
               За сезон
             </span>
           </div>
@@ -126,18 +126,20 @@ export default function HeatingCompare({ kicker = "Деньги" }: { kicker?: s
                     </span>
                   </span>
                   {/* Полоса длиной по счёту за месяц: разница видна раньше,
-                      чем человек прочитает цифры. */}
+                      чем человек прочитает цифры. Насос — яркий зелёный,
+                      остальные способы — тёмный: одна шкала цвета вместо
+                      противопоставления зелёного и терракотового. */}
                   <span aria-hidden className="mt-2 block h-[5px] w-full rounded-full bg-line">
                     <span
                       className={`block h-full rounded-full transition-[width] duration-200 motion-reduce:transition-none ${
-                        isPump ? "bg-eco" : "bg-graphite/35"
+                        isPump ? "bg-eco-bright" : "bg-eco-dark/70"
                       }`}
                       style={{ width: `${max > 0 ? (row.monthCost / max) * 100 : 0}%` }}
                     />
                   </span>
                 </div>
 
-                <Cell label="В зимний месяц" value={`${money(row.monthCost)} сом`} strong={isPump} />
+                <Cell label="В зимний месяц" value={`${money(row.monthCost)} сом`} strong={isPump} big />
                 <Cell label="За сезон" value={`${money(row.seasonCost)} сом`} />
               </div>
             );
@@ -146,7 +148,7 @@ export default function HeatingCompare({ kicker = "Деньги" }: { kicker?: s
 
         <p className="mt-6 max-w-[46em] text-[16px] leading-[1.6] text-graphite md:text-[17px]">
           Насос экономит{" "}
-          <b className="text-eco-dark">{money(cheapest.monthCost - pump.monthCost)} сом</b> в каждый зимний месяц
+          <b className="num text-eco-dark">{money(cheapest.monthCost - pump.monthCost)} сом</b> в каждый зимний месяц
           против самого выгодного из остальных способов — {money(cheapest.seasonCost - pump.seasonCost)} сом за
           сезон. Разницу даёт не цена электричества, а COP {dec(result.cop, 1)}: насос не производит тепло, а
           переносит готовое.
@@ -238,15 +240,30 @@ export default function HeatingCompare({ kicker = "Деньги" }: { kicker?: s
   );
 }
 
-function Cell({ label, value, strong = false }: { label: string; value: string; strong?: boolean }) {
+/**
+ * Ячейка суммы. Значения — моно с табличными разрядами: колонка цифр
+ * выстраивается посимвольно, а месяц (big) крупнее сезона — читатель
+ * сравнивает сначала главные числа.
+ */
+function Cell({
+  label,
+  value,
+  strong = false,
+  big = false,
+}: {
+  label: string;
+  value: string;
+  strong?: boolean;
+  big?: boolean;
+}) {
   return (
     <div className="md:text-right">
-      <span className="block font-head text-[10px] font-bold uppercase tracking-[0.14em] text-muted md:hidden">
-        {label}
-      </span>
+      <span className="mono-label block text-[10px] md:hidden">{label}</span>
       <span
-        className={`block font-head text-[16px] tabular-nums md:text-[17px] ${
-          strong ? "font-bold text-eco-dark" : "font-semibold text-graphite"
+        className={`num block ${
+          big
+            ? `text-[19px] font-semibold md:text-[21px] ${strong ? "text-eco-dark" : "text-graphite"}`
+            : "text-[15px] text-muted md:text-[15.5px]"
         }`}
       >
         {value}
@@ -269,7 +286,7 @@ function PriceField({
   const [text, setText] = useState(String(value));
   return (
     <label className="block">
-      <span className="font-head text-[11px] font-bold uppercase tracking-[0.18em] text-muted">{label}</span>
+      <span className="mono-label">{label}</span>
       <input
         type="text"
         inputMode="decimal"
@@ -281,7 +298,7 @@ function PriceField({
           if (Number.isFinite(parsed) && parsed > 0) onChange(parsed);
         }}
         onBlur={() => setText(String(value))}
-        className="mt-2 block w-[7ch] border-0 border-b-2 border-line bg-transparent p-0 font-head text-[20px] font-bold tabular-nums text-graphite outline-none focus:border-eco"
+        className="mt-2 block w-[7ch] border-0 border-b-2 border-line bg-transparent p-0 num text-[20px] font-semibold text-graphite outline-none focus:border-eco"
       />
       <span className="mt-1.5 block max-w-[24em] text-[12.5px] leading-[1.5] text-muted">{hint}</span>
     </label>

@@ -5,6 +5,7 @@ import Image from "next/image";
 import { PhotoBadge } from "./SectionKit";
 import Link from "next/link";
 import LeadButton from "@/components/LeadButton";
+import { Eyebrow } from "@/components/product/SectionKit";
 
 /**
  * Секция «Как мы работаем» по образцу 1KOMMA5°: тёмная полоса на всю ширину,
@@ -64,25 +65,15 @@ export default function StepsAccordion({
   const photo = items[active];
 
   return (
-    <section
-      /* Градиент вместо плоского графита (решение заказчика 04.09): диагональ
-         из тёмно-зелёного бренда в почти чёрный, оба конца держат белый текст
-         с запасом по контрасту. */
-      style={{
-        background:
-          "linear-gradient(135deg, #1b3a12 0%, #16240f 38%, #141414 72%, #101a13 100%)",
-      }}
-    >
+    /* Плоская фирменная хвоя вместо диагональной растяжки: градиент 04.09
+       компенсировал «чужой» чёрный графит, в новой палитре тёмный сам по
+       себе брендовый, и якорные секции по всему сайту одноцветные. */
+    <section className="bg-graphite">
       <div className="grid items-stretch md:grid-cols-2">
         {/* Левая колонка выровнена по общей сетке страницы (max-w-6xl = 72rem),
             правая уходит фотографией в край экрана — как в референсе. */}
         <div className="px-4 py-16 md:py-24 md:pl-[max(1.5rem,calc((100vw-72rem)/2))] md:pr-12 lg:pr-16">
-          <span className="flex items-center gap-3">
-            <span aria-hidden className="block h-px w-8 bg-white/40" />
-            <span className="font-head text-[11px] font-bold uppercase tracking-[0.24em] text-white/70">
-              {kicker}
-            </span>
-          </span>
+          <Eyebrow light>{kicker}</Eyebrow>
 
           <h2 className="mt-6 max-w-[13em] text-[30px] font-bold leading-[1.08] tracking-[-0.02em] !text-white md:text-[42px]">
             {title}

@@ -61,10 +61,10 @@ export const SEASON_MONTHS = 5.5;
 export const BASE_HOUSEHOLD_KWH = 350;
 
 /** Выработка с 1 кВт установленной мощности за год в Бишкеке, кВт·ч. */
-const SOLAR_YIELD_PER_KWP = 1750;
+export const SOLAR_YIELD_PER_KWP = 1750;
 
 /** Мощность одной панели каталога, Вт. */
-const PANEL_WATT = 635;
+export const PANEL_WATT = 635;
 
 /* ─────────────────────────────────────────────────────────────── типы */
 

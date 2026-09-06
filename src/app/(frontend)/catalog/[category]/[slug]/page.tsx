@@ -4,7 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import Lead from "@/components/Lead";
+import FormStrip from "@/components/FormStrip";
 import LeadButton from "@/components/LeadButton";
 import CatalogSidebar from "@/components/catalog/CatalogSidebar";
 import ProductGallery from "@/components/catalog/ProductGallery";
@@ -219,7 +219,7 @@ export default async function ProductPage({
           </div>
         </div>
 
-        <Lead source={`product-${item.slug}`} interest={categoryTitle(item.category)} />
+        <FormStrip source={`product-${item.slug}`} interest={categoryTitle(item.category)} />
       </main>
       <Footer />
     </>

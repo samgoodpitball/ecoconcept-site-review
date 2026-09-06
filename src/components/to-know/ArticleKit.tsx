@@ -65,7 +65,7 @@ export function Statement({ children }: { children: React.ReactNode }) {
   return (
     /* Плоский тёмно-зелёный: два разрешённых отступления от запрета градиентов
        уже заняты блоками главной и секцией «Как мы работаем». */
-    <section className="bg-[#1b3a12]">
+    <section className="bg-graphite">
       <div className="mx-auto max-w-6xl px-4 py-14 md:px-6 md:py-20">
         <p className="max-w-[18em] font-head text-[26px] font-bold leading-[1.12] tracking-[-0.02em] text-white md:text-[42px]">
           {children}
@@ -112,7 +112,7 @@ export function NumberedList({ items }: { items: readonly { title: string; text:
     <ol className="mt-9 flex flex-col">
       {items.map((item, i) => (
         <li key={item.title} className="flex gap-5 border-t border-line py-6 last:border-b">
-          <span className="font-head text-[15px] font-bold tabular-nums text-eco-dark md:text-[17px]">
+          <span className="num-hero pt-0.5 text-[22px] text-eco-dark/70 md:text-[26px]">
             {String(i + 1).padStart(2, "0")}
           </span>
           <span>

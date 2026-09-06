@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import Lead from "@/components/Lead";
+import FormStrip from "@/components/FormStrip";
 import VideoExplainer from "@/components/product/VideoExplainer";
 import Link from "next/link";
 import { ModelCard } from "@/components/product/SectionKit";
@@ -64,7 +64,7 @@ export default function WhatIsAHeatPumpPage() {
             {c.cold.table.rows.map((r) => (
               <div key={r.mode} className="grid grid-cols-[1fr_auto] gap-x-6 border-b border-line py-3.5">
                 <span className="text-[15.5px] leading-[1.5] text-graphite md:text-[16px]">{r.mode}</span>
-                <span className="font-head text-[15.5px] font-semibold tabular-nums text-graphite md:text-[16px]">
+                <span className="num text-[17px] font-semibold text-graphite md:text-[18px]">
                   {r.value}
                 </span>
               </div>
@@ -117,7 +117,7 @@ export default function WhatIsAHeatPumpPage() {
 
         <NextSteps {...c.next} />
         <SourcesNote items={c.sources} />
-        <Lead source="to-know-heat-pump" interest="heat" />
+        <FormStrip source="to-know-heat-pump" interest="heat" />
       </main>
       <Footer />
     </>

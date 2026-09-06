@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import Lead from "@/components/Lead";
+import FormStrip from "@/components/FormStrip";
 
 export const metadata: Metadata = {
   title: "Объекты EcoConcept — портфолио смонтированных систем",
@@ -27,9 +27,13 @@ export default function ProjectsPage() {
       <Header />
       <main>
         <section className="bg-white">
-          <div className="mx-auto max-w-3xl px-4 pb-16 pt-16 text-center md:px-6 md:pb-24 md:pt-24">
-            <span className="block font-head text-[11px] font-bold uppercase tracking-[0.24em] text-muted">
-              Объекты
+          {/* Честная пустота в языке журнала: «лист ожидания» — рамка
+              документа с линейкой и моно-рубрикой вместо голого центра.
+              Содержание не изменилось: раздел пуст и говорит почему. */}
+          <div className="mx-auto max-w-3xl px-4 pb-16 pt-16 md:px-6 md:pb-24 md:pt-24">
+            <div className="rounded-[10px] border border-line bg-paper px-6 py-10 text-center md:px-12 md:py-14">
+            <span className="mono-label block">
+              Объекты · раздел готовится
             </span>
             <h1 className="mx-auto mt-5 max-w-[13em] text-[30px] font-bold leading-[1.08] tracking-[-0.02em] md:text-[44px]">
               Снимаем свои объекты
@@ -52,10 +56,11 @@ export default function ProjectsPage() {
                 О компании
               </Link>
             </div>
+            </div>
           </div>
         </section>
 
-        <Lead source="projects" />
+        <FormStrip source="projects" />
       </main>
       <Footer />
     </>

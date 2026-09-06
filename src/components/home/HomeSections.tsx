@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Eyebrow } from "@/components/product/SectionKit";
@@ -84,93 +87,86 @@ export function Brands() {
 }
 
 /**
- * Этапы работы — горизонтальный таймлайн.
+ * Этапы работы — вкладки с раскрытием.
  *
- * Третий визуальный ход для одного и того же сюжета: на продуктовых страницах
- * это тёмная полоса с аккордеоном и фотографией до края экрана, на /about —
- * сетка 2×2 с линейными иконками. Здесь ни фото, ни иконок, ни тёмного фона:
- * одна линия с засечками, крупные номера и строка «на выходе» под каждым
- * этапом. Так секция не спорит с лентой «Почему EcoConcept», которая стоит
- * следом и целиком построена на снимках.
+ * Раскладка снята с octopus.energy/heat-pump-explore: ряд переключателей
+ * сверху, под ними панель выбранного этапа — текст слева, снимок справа.
+ * Приём решает то, чего не мог маршрутный лист: секция занимает один экран
+ * вместо четырёх, а человек читает ровно тот этап, который его интересует.
  *
- * Раскладка: на десктопе четыре колонки под общей горизонтальной линией, на
- * телефоне — вертикальная линия слева и те же засечки.
+ * Переключение — по клику, без появления при прокрутке: движение остаётся
+ * откликом на действие.
  */
 export function Steps() {
   const s = home.steps;
+  const [active, setActive] = useState(0);
+  const step = s.items[active];
+
   return (
-    <section className="border-b border-line bg-off">
-      <div className="mx-auto max-w-6xl px-4 py-16 md:px-6 md:py-24">
-        <Eyebrow>{s.kicker}</Eyebrow>
-        <div className="mt-6 grid gap-6 md:grid-cols-[1.05fr_0.95fr] md:items-end">
-          <h2 className="max-w-[14em] text-[28px] font-bold leading-[1.1] tracking-[-0.02em] md:text-[38px]">
-            {s.title}
-          </h2>
-          <p className="max-w-[34em] text-[16px] leading-[1.6] text-muted">{s.text}</p>
+    <section className="bg-white">
+      <div className="mx-auto max-w-6xl px-4 py-12 md:px-6 md:py-16">
+        <div className="overflow-hidden rounded-[32px] bg-graphite px-6 py-10 md:px-10 md:py-12">
+        <div className="grid gap-4 md:grid-cols-[1.05fr_0.95fr] md:items-end md:gap-8">
+            <div>
+              <Eyebrow light>{s.kicker}</Eyebrow>
+              <h2 className="mt-4 max-w-[14em] text-[26px] font-bold leading-[1.1] tracking-[-0.02em] text-white md:text-[34px]">
+                {s.title}
+              </h2>
+            </div>
+            <p className="max-w-[34em] text-[15.5px] leading-[1.6] text-white/70">{s.text}</p>
+          </div>
+
+        {/* Переключатели этапов. На телефоне едут вбок: четыре названия в
+            строку не помещаются, а перенос ломает ряд. */}
+          <div className="mt-7 -mx-6 overflow-x-auto px-6 md:mx-0 md:overflow-visible md:px-0">
+          <div
+            role="tablist"
+            aria-label={s.title}
+            className="flex min-w-max gap-2 rounded-[12px] border border-white/15 p-1.5 md:min-w-0"
+          >
+            {s.items.map((item, i) => {
+              const on = i === active;
+              return (
+                <button
+                  key={item.n}
+                  role="tab"
+                  aria-selected={on}
+                  onClick={() => setActive(i)}
+                  className={`flex flex-1 items-center justify-center gap-2.5 whitespace-nowrap rounded-[8px] px-4 py-3 transition-colors ${
+                    on ? "bg-eco-bright text-graphite" : "text-white/70 hover:bg-white/5 hover:text-white"
+                  }`}
+                >
+                  <span className={`num text-[13px] ${on ? "text-graphite/70" : "text-white/45"}`}>{item.n}</span>
+                  <span className="font-head text-[15px] font-semibold md:text-[16px]">{item.title}</span>
+                </button>
+              );
+            })}
+          </div>
         </div>
 
-        <div className="relative mt-14">
-          {/* Общая линия этапов. На десктопе проходит под номерами, на телефоне
-              её заменяет вертикальная — она задана рамкой у каждой строки. */}
-          <span
-            aria-hidden
-            className="absolute left-0 right-0 top-[69px] hidden h-px bg-line md:block"
-          />
-
-          {/* subgrid выравнивает одноимённые части всех четырёх колонок по общим
-              строкам: иначе линия «На выходе» стоит в каждой колонке на своей
-              высоте — тексты этапов разной длины. */}
-          <ol className="grid gap-10 md:grid-cols-4 md:grid-rows-[auto_auto_1fr_auto] md:gap-x-8 md:gap-y-0">
-            {s.items.map((item) => (
-              <li
-                key={item.n}
-                className="relative pl-8 md:row-span-4 md:grid md:grid-rows-subgrid md:pl-0"
-              >
-                {/* Вертикальная линия телефонной раскладки. */}
-                <span
-                  aria-hidden
-                  className="absolute bottom-0 left-[4px] top-2 w-px bg-line md:hidden"
-                />
-
-                <span className="block">
-                  <span className="hidden font-head text-[44px] font-bold leading-none tabular-nums text-graphite/20 md:block">
-                    {item.n}
-                  </span>
-                  {/* Засечка на линии: квадрат, а не точка — та же геометрия, что
-                      у отметок списков в SectionKit. */}
-                  <span
-                    aria-hidden
-                    className="absolute left-0 top-[6px] block h-[9px] w-[9px] bg-eco md:relative md:left-auto md:top-0 md:mt-[16px]"
-                  />
-                </span>
-
-                <span className="mt-1 block md:mt-6">
-                  <span className="flex items-baseline gap-3">
-                    <span className="font-head text-[15px] font-bold tabular-nums text-graphite/40 md:hidden">
-                      {item.n}
-                    </span>
-                    <h3 className="font-head text-[19px] font-bold leading-[1.2] text-graphite md:text-[21px]">
-                      {item.title}
-                    </h3>
-                  </span>
-                  {item.term ? (
-                    <span className="mt-2 block font-head text-[12px] font-bold uppercase tracking-[0.14em] text-eco-dark">
-                      {item.term}
-                    </span>
-                  ) : null}
-                </span>
-
-                <p className="mt-3 text-[15px] leading-[1.6] text-muted">{item.text}</p>
-
-                <p className="mt-5 border-t border-line pt-4 text-[14.5px] leading-[1.5] text-graphite">
-                  <span className="mb-1.5 block font-head text-[10.5px] font-bold uppercase tracking-[0.16em] text-muted">
-                    На выходе
-                  </span>
-                  {item.result}
-                </p>
-              </li>
-            ))}
-          </ol>
+          {/* Панель этапа: номер, заголовок и текст. Снимки и блок «На выходе»
+              сняты 06.09.2026 — секция должна занимать минимум места, а
+              подробности этапа человек получает в разговоре, а не на главной.
+              Поля photo/result в контенте сохранены. */}
+          <div
+            key={step.n}
+            className="mt-4 flex flex-col gap-4 rounded-[20px] border border-white/12 p-6 [animation:fade-in_.22s_ease-out] motion-reduce:[animation:none] md:flex-row md:items-start md:gap-8 md:p-8"
+          >
+            <span className="num-hero shrink-0 text-[36px] leading-none text-eco-bright md:text-[44px]">
+              {step.n}
+            </span>
+            <div>
+              <h3 className="font-head text-[21px] font-bold leading-[1.2] text-white md:text-[24px]">
+                {step.title}
+              </h3>
+              <p className="mt-2.5 max-w-[46em] text-[15px] leading-[1.6] text-white/75 md:text-[16px]">
+                {step.text}
+              </p>
+              {step.term ? (
+                <span className="mono-label mt-3 block text-eco-bright">{step.term}</span>
+              ) : null}
+            </div>
+          </div>
         </div>
       </div>
     </section>

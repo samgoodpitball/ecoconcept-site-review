@@ -2,7 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 import StepsAccordion from "@/components/product/StepsAccordion";
 import ModelsCarousel from "@/components/product/ModelsCarousel";
-import { Eyebrow, Disclosure, CheckMark, ModelCard } from "@/components/product/SectionKit";
+import SchemeFigure from "@/components/SchemeFigure";
+import { Eyebrow, Disclosure, ModelCard } from "@/components/product/SectionKit";
 import { solar } from "@/content/solar";
 import { itemsOf, categoryHref, subtitle, facts, type CatalogItem } from "@/lib/catalog-view";
 
@@ -12,9 +13,10 @@ import { itemsOf, categoryHref, subtitle, facts, type CatalogItem } from "@/lib/
  * Раскладка и типографика те же, что на /heat-pumps: страницы отличаются
  * содержанием, а не языком. Две осмысленные разницы:
  *
- * 1. Вместо двух объёмных схем — сравнение сетевой и гибридной станции
- *    таблицей на линиях: у клиента здесь не вопрос «как это работает
- *    физически», а вопрос «что будет, когда выключат свет».
+ * 1. Устройство станции показано одной схемой, а выбор типа — таблицей на
+ *    линиях: у клиента здесь не вопрос «как это работает физически», а вопрос
+ *    «что будет, когда выключат свет». Чертёж сетевой и гибридной станции
+ *    переехал в разбор /to-know/grid-or-hybrid, где он и раскрывается.
  * 2. В ленте оборудования три раздела каталога вместо одного, и у Deye нет
  *    фотографий — вместо серой заглушки в карточке стоит главное число модели.
  */
@@ -55,14 +57,14 @@ export function SolHero() {
           <h1 className="mt-6 text-[34px] font-bold leading-[1.06] tracking-[-0.025em] md:text-[52px]">{h.title}</h1>
           <p className="mt-7 max-w-[34em] text-[16.5px] leading-[1.65] text-muted md:text-[17px]">{h.text}</p>
 
-          <ul className="mt-10 flex flex-col gap-5">
-            {h.facts.map((fact) => (
-              <li key={fact} className="flex items-start gap-4">
-                <CheckMark />
-                <span className="text-[16px] leading-[1.5] text-ink md:text-[16.5px]">{fact}</span>
-              </li>
-            ))}
-          </ul>
+          <div className="mt-9 flex flex-wrap gap-3">
+            <Link href={h.primary.href} className="btn-primary">
+              {h.primary.label}
+            </Link>
+            <Link href={h.secondary.href} className="btn-outline">
+              {h.secondary.label}
+            </Link>
+          </div>
         </div>
       </div>
     </section>
@@ -83,6 +85,46 @@ export function SolReasons() {
         {r.items.map((item, i) => (
           <Disclosure key={item.q} q={item.q} a={item.a} open={i === 0} large />
         ))}
+      </div>
+    </section>
+  );
+}
+
+/* ────────────────────────────────────────── устройство станции: схема */
+
+/**
+ * «Как устроена станция» — одна иллюстрация и подпись к ней.
+ *
+ * Схема нарисована для прежнего сайта и перенесена сюда как есть: вшитый в
+ * картинку заголовок и нижняя плашка убраны, их работу делает типографика
+ * страницы — иначе на странице оказалось бы два заголовка, один из которых
+ * нельзя ни перевести, ни поправить.
+ *
+ * Секция отвечает на вопрос «из чего это состоит», а следующая — «сетевая или
+ * гибридная». Раньше оба вопроса стояли в одной секции, и схема выбора типа
+ * читалась как схема устройства.
+ */
+export function SolScheme() {
+  const s = solar.scheme;
+  return (
+    <section id="scheme" className="scroll-mt-24 border-b border-line bg-white">
+      <div className="mx-auto max-w-6xl px-4 py-20 md:px-6 md:py-24">
+        <Eyebrow>{s.kicker}</Eyebrow>
+        <h2 className="mt-6 max-w-[14em] text-[30px] font-bold leading-[1.08] tracking-[-0.02em] md:text-[42px]">
+          {s.title}
+        </h2>
+        <p className="mt-6 max-w-[42em] text-[16px] leading-[1.7] text-muted">{s.text}</p>
+
+        <div className="mt-10">
+          <SchemeFigure
+            src={s.figure.src}
+            alt={s.figure.alt}
+            caption={s.figure.caption}
+            figure="01"
+            width={s.figure.width}
+            height={s.figure.height}
+          />
+        </div>
       </div>
     </section>
   );

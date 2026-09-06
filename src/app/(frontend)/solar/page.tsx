@@ -1,13 +1,15 @@
 import type { Metadata } from "next";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import Lead from "@/components/Lead";
+import FormStrip from "@/components/FormStrip";
 import EstimateSection from "@/components/calculator/EstimateSection";
+import SavingsSection from "@/components/product/SavingsSection";
 import WhyUs from "@/components/product/WhyUs";
 import { solar } from "@/content/solar";
 import {
   SolHero,
   SolReasons,
+  SolScheme,
   SolHow,
   SolModels,
   SolSteps,
@@ -36,13 +38,15 @@ export default function SolarPage() {
       <main>
         <SolHero />
         <SolReasons />
+        <SolScheme />
         <SolHow />
         <SolModels />
+        <SavingsSection defaultKind="solar" />
         <EstimateSection source="solar" kind="solar" />
         <SolSteps />
         <WhyUs {...solar.why} />
         <SolFaq />
-        <Lead source="solar" interest="solar" />
+        <FormStrip source="solar" interest="solar" />
       </main>
       <Footer />
     </>

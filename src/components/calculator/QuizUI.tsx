@@ -29,7 +29,7 @@ export function Progress({
           <li key={s.id} className="flex items-center gap-1 md:gap-2">
             <span
               aria-hidden
-              className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-[12px] font-bold md:h-7 md:w-7 md:text-[13px] ${
+              className={`num flex h-6 w-6 shrink-0 items-center justify-center rounded-[4px] text-[12px] font-semibold md:h-7 md:w-7 md:text-[13px] ${
                 done || active
                   ? "bg-eco-dark text-white"
                   : "border border-line bg-white text-muted"

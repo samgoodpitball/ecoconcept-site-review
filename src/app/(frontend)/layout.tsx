@@ -1,10 +1,14 @@
 import type { Metadata } from "next";
-import "@fontsource/montserrat/600.css";
-import "@fontsource/montserrat/700.css";
-import "@fontsource/montserrat/800.css";
-import "@fontsource/inter/400.css";
-import "@fontsource/inter/500.css";
-import "@fontsource/inter/600.css";
+// IBM Plex: Sans — проза и заголовки, Mono — числа, метки и подписи схем.
+// Пара выбрана как «голос инженерного документа» с полной кириллицей;
+// обоснование смены — в отчёте редизайна.
+import "@fontsource/ibm-plex-sans/400.css";
+import "@fontsource/ibm-plex-sans/500.css";
+import "@fontsource/ibm-plex-sans/600.css";
+import "@fontsource/ibm-plex-sans/700.css";
+import "@fontsource/ibm-plex-mono/400.css";
+import "@fontsource/ibm-plex-mono/500.css";
+import "@fontsource/ibm-plex-mono/600.css";
 import "./globals.css";
 import { ru, contacts } from "@/content/site";
 import { LeadModalProvider } from "@/components/LeadModal";
