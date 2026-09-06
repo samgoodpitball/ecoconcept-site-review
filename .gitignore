@@ -6,6 +6,7 @@ media/
 .DS_Store
 .vercel
 .env*
+!.env.example
 .agents/
 .claude/
 skills-lock.json
