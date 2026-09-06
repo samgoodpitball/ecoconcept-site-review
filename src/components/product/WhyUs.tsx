@@ -1,34 +1,27 @@
-"use client";
-
-import { useState } from "react";
-import Image from "next/image";
-import { PhotoBadge } from "@/components/product/SectionKit";
+import { Icon, type IconName } from "@/components/ui/icons";
+import { Eyebrow } from "./SectionKit";
 
 /**
  * Секция «Почему EcoConcept» — причины выбрать нас, а не соседа по рынку.
  *
- * Раскладка снята с блока «Power your home, your way» на energysage.com:
- * ряд высоких плиток, у каждой фотография во всю плитку и крупный белый
- * заголовок внизу. Плитки узкие, пока их не тронули; наведение расширяет одну
- * за счёт соседних, клик раскрывает текст причины.
+ * Подача — «протокол преимуществ»: линованный перечень с моно-номером,
+ * чертёжной иконкой сущности и полным текстом причины. Фотографий здесь нет
+ * сознательно (находка №2 брифа): четыре из пяти карточек стояли на сером
+ * стоке и на телефоне давали полтора экрана серых прямоугольников. Своей
+ * съёмки долго не будет — а протокол работает без неё и читается целиком,
+ * без наведений и кликов. Поля photo/alt/badge в контенте сохранены: когда
+ * появится съёмка, решим, возвращать ли её сюда или в раздел объектов.
  *
- * Разделение «навёл — шире, нажал — текст» — постановка заказчика 05.09.2026.
- * Смысл: пробегая мышью по ряду, человек читает только заголовки и не получает
- * прыгающих абзацев; текст приходит, когда он его выбрал.
- *
- * Затемнение под белым текстом — сплошная плашка, а не градиент: градиенты
- * запрещены дизайн-системой, а без затемнения белый заголовок не читается на
- * светлых кадрах.
- *
- * Секция общая для всех страниц, различается только контент.
+ * Секция общая для главной и обеих продуктовых; различается только контент.
  */
 
 export type WhyItem = {
   readonly title: string;
   readonly text: string;
-  readonly photo: string;
-  readonly alt: string;
-  /** Плашка на снимке: «Сток · заменить» или «ИИ-генерация». Пусто — своя съёмка. */
+  /** Чертёжная иконка сущности из общего модуля (метаданные подачи). */
+  readonly icon?: IconName;
+  readonly photo?: string;
+  readonly alt?: string;
   readonly badge?: string;
 };
 
@@ -41,102 +34,34 @@ export default function WhyUs({
   subtitle: string;
   items: readonly WhyItem[];
 }) {
-  /* Открытая кликом плитка: она показывает текст. Первая открыта сразу —
-     иначе по ряду заголовков не видно, что за ними есть содержание. */
-  const [open, setOpen] = useState(0);
-  /* Наведение только расширяет плитку и текста не показывает. */
-  const [hovered, setHovered] = useState<number | null>(null);
-
-  const wide = hovered ?? open;
-
   return (
     <section className="border-t border-line bg-white">
-      <div className="mx-auto max-w-6xl px-4 py-20 md:px-6 md:py-28">
-        <div className="text-center">
-          <h2 className="text-[30px] font-bold leading-[1.08] tracking-[-0.02em] md:text-[44px]">{title}</h2>
-          <p className="mt-4 text-[19px] leading-[1.35] text-muted md:text-[24px]">{subtitle}</p>
-        </div>
+      <div className="mx-auto max-w-6xl px-4 py-16 md:px-6 md:py-24">
+        {/* Подзаголовок встал в роль рубрики: у секции появляется та же левая
+            шапка с номером, что у всех остальных. */}
+        <Eyebrow>{subtitle}</Eyebrow>
+        <h2 className="mt-5 max-w-[16em] text-[30px] font-bold leading-[1.08] tracking-[-0.02em] md:text-[44px]">
+          {title}
+        </h2>
 
-        <div
-          className="mt-12 flex flex-col gap-3 md:h-[560px] md:flex-row"
-          onMouseLeave={() => setHovered(null)}
-        >
-          {items.map((item, i) => {
-            const isWide = wide === i;
-            const isOpen = open === i;
-            /* Текст показывается только в широкой плитке: пока мышь на соседней,
-               открытая сжата до 150 px, и абзац в ней не читается. */
-            const showText = isOpen && isWide;
-            return (
-              <button
-                key={item.title}
-                type="button"
-                aria-expanded={isOpen}
-                onMouseEnter={() => setHovered(i)}
-                onFocus={() => setHovered(i)}
-                onClick={() => setOpen(isOpen ? -1 : i)}
-                style={{ flexGrow: isWide ? 3 : 1 }}
-                className={`group relative overflow-hidden rounded-[12px] text-left transition-all duration-200 ease-out motion-reduce:transition-none md:min-w-0 md:flex-1 md:basis-0 ${
-                  isOpen ? "h-[300px]" : "h-[116px]"
-                } md:h-auto`}
-              >
-                <Image
-                  src={item.photo}
-                  alt={item.alt}
-                  fill
-                  sizes="(max-width: 768px) 100vw, 520px"
-                  className="object-cover"
-                />
-
-                {/* Плашка держит контраст белого текста: 40% на узкой плитке,
-                    60% на раскрытой, где под заголовком идёт абзац. */}
-                <span
-                  aria-hidden
-                  className={`absolute inset-0 bg-graphite transition-opacity duration-200 motion-reduce:transition-none ${
-                    showText ? "opacity-55" : isWide ? "opacity-40" : "opacity-30"
-                  }`}
-                />
-
-                {item.badge ? (
-                  <PhotoBadge>{item.badge}</PhotoBadge>
-                ) : null}
-
-                <span
-                  className={`absolute inset-x-0 bottom-0 flex flex-col ${
-                    isWide ? "p-5 md:p-6" : "p-4"
-                  }`}
-                >
-                  <span
-                    className={`font-head font-bold leading-[1.15] tracking-[-0.01em] text-white [hyphens:auto] ${
-                      isWide ? "text-[20px] md:text-[26px]" : "text-[16px]"
-                    }`}
-                  >
-                    {item.title}
-                  </span>
-
-                  {/* Текст живёт в сетке, схлопнутой до нуля: так он выезжает
-                      без скачка высоты и не требует знать свою высоту заранее. */}
-                  <span
-                    className={`grid transition-[grid-template-rows,opacity] duration-200 ease-out motion-reduce:transition-none ${
-                      showText ? "mt-3 grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
-                    }`}
-                  >
-                    <span className="overflow-hidden">
-                      <span className="block max-w-[36em] text-[15px] leading-[1.6] text-white/85 md:text-[15.5px]">
-                        {item.text}
-                      </span>
-                    </span>
-                  </span>
-
-                  {!showText ? (
-                    <span className="mt-3 font-head text-[11px] font-bold uppercase tracking-[0.16em] text-white/70">
-                      Подробнее
-                    </span>
-                  ) : null}
+        <div className="mt-10 border-t border-line md:mt-12">
+          {items.map((item, i) => (
+            <div
+              key={item.title}
+              className="grid gap-x-10 gap-y-2.5 border-b border-line py-6 md:grid-cols-[minmax(0,0.9fr)_minmax(0,1.4fr)] md:py-7"
+            >
+              <div className="flex items-start gap-4">
+                <span aria-hidden className="num pt-0.5 text-[0.82rem] font-medium text-muted">
+                  {String(i + 1).padStart(2, "0")}
                 </span>
-              </button>
-            );
-          })}
+                {item.icon && <Icon name={item.icon} size={26} className="mt-px shrink-0 text-eco-dark" />}
+                <h3 className="font-head text-[17.5px] font-bold leading-[1.3] text-graphite md:text-[19px]">
+                  {item.title}
+                </h3>
+              </div>
+              <p className="pl-9 text-[15.5px] leading-[1.65] text-muted md:pl-0 md:text-[16px]">{item.text}</p>
+            </div>
+          ))}
         </div>
       </div>
     </section>
